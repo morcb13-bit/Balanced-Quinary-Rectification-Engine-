@@ -34,6 +34,8 @@ When quantized to Balanced Quinary, random noise is rounded to one of `{-2, -1, 
 Because the state set is zero-symmetric, **the expected value of random noise becomes exactly 0, suppressing long-term drift using only integer arithmetic.**
 
 ```python
+import numpy as np
+
 def to_balanced_quinary(value, unit=0.5):
     """Map a continuous value to {-2, -1, 0, 1, 2}"""
     raw = value / unit
@@ -129,6 +131,52 @@ def bqre_dead_reckoning(gps_x, gps_y, accel, gyro, gps_phase, total, dt=1.0, uni
 | Final error improvement | — | **15.12 m reduction (≈54%)** |
 
 After 30 seconds of signal loss, Model A shows a position nearly 28 m from the true location. B-QRE stays within 13 m. For the practical use case of **deciding which direction to walk after exiting a ticket gate**, this difference is meaningful.
+
+---
+
+## Honest Limitations
+
+This article is a Proof of Concept. **No real-device validation has been conducted.** The following points are open questions:
+
+- `unit = 0.6 m/s` is tuned for this simulation. Real-world optimal values will vary by device and walking speed
+- In a separate experiment, B-QRE showed no advantage over simple clipping for spike noise suppression
+- Scenarios with frequent sharp acceleration or direction changes may be affected by the coarseness of discrete states
+- Real-device validation requires Android GNSS Raw Measurements logs
+
+**The "54% improvement" figure will differ on real hardware. Please do not use this number as a basis for adoption decisions.**
+
+---
+
+## What's Next
+
+- [ ] Validate with real Android GNSS Raw Measurements logs
+- [ ] Dynamic adaptation of `unit` based on movement speed
+- [ ] Hybrid implementation with EKF
+- [ ] Extension to 2D and 3D
+- [ ] Evaluation in environments with frequent spike noise
+
+---
+
+## Repository
+
+Full code: [GitHub — URL to be added]  
+License: MIT
+
+Feedback and pull requests are welcome.
+
+---
+
+*© 2026. Shared as a contribution to the commons.*
+
+---
+
+## About This Series
+
+This article is part of the "No sin, No cos, No Differential Equations" series.
+
+> **Series concept**: Solving engineering problems using discrete, intuitive mathematics — without sin, cos, or differential equations. Note that this implementation uses `np.arctan2()` and gyroscope integration, which is not fully consistent with the series title. This is a practical compromise at the PoC stage. Implementing heading estimation without trigonometric functions remains a future challenge.
+
+Zenn (Part 1): [URL to be added]difference is meaningful.
 
 ---
 
