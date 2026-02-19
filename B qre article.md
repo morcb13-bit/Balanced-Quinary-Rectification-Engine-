@@ -2,6 +2,8 @@
 
 **Balanced Quinary Rectification Engine — Proof of Concept**
 
+Author: MORO / 2026
+
 ---
 
 ## なぜこれを書いたか
@@ -32,6 +34,8 @@
 状態集合がゼロ対称なので、**ランダムノイズの期待値が厳密に0になり、長期的なドリフトが整数演算だけで抑制できる。**
 
 ```python
+import numpy as np
+
 def to_balanced_quinary(value, unit=0.5):
     """連続値を {-2, -1, 0, 1, 2} にマッピング"""
     raw = value / unit
@@ -161,10 +165,19 @@ def bqre_dead_reckoning(gps_x, gps_y, accel, gyro, gps_phase, total, dt=1.0, uni
 
 ---
 
-## シリーズについて
-
-本稿は「No sin, No cos, No Differential Equations」シリーズの一部です。
+*© 2026 MORO. 宇宙の共有財産として公開する。*
 
 ---
 
-*© 2026 MORO. 宇宙の共有財産として公開する。*
+## シリーズについて
+
+本稿は「No sin, No cos, No Differential Equations」シリーズの第二弾です。
+
+> **シリーズの趣旨**: sin・cos・微分方程式を使わずに、工学的な問題を離散的・直感的な数理で解く試みです。本稿では `np.arctan2()` とジャイロ積分を使用しており、シリーズ名と完全には一致しません。これはPoC段階での実装上の妥協であり、今後の課題として三角関数不要な方向推定の実装を検討しています。
+
+---
+
+Zenn（第一弾）: [URL後日追記]
+---
+
+*© 2026 MORC.B13*
